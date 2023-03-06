@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
     paddingTop: 50,
+    // backgroundColor: 'red',
   },
   mainContainerSignUp: {
     flex: 1,
@@ -76,4 +77,85 @@ export const styles = StyleSheet.create({
   footerText: {color: '#954bc9', fontWeight: 700},
   footer: {marginTop: 100},
   signUpFooter: {marginTop: 30},
+});
+
+export const productDetailStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  image: {
+    width: '100%',
+    aspectRatio: 1,
+  },
+  detailsContainer: {
+    flexDirection: 'row',
+    padding: 16,
+    justifyContent: 'space-between',
+    borderBottomColor: 'grey',
+    borderBottomWidth: 2,
+  },
+  bottomContainer: {
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+    left: '10%',
+  },
+  middleContainer: {
+    flexDirection: 'row',
+    marginTop: 50,
+  },
+  middleContainerRight: {
+    flexDirection: 'row',
+  },
+  middleContainerText: {
+    fontSize: 22,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: 'purple',
+  },
+  description: {
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  button1: {
+    width: '45%',
+    backgroundColor: '#e3ccf3',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+  },
+  button2: {
+    width: '45%',
+    backgroundColor: '#FFB84C',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+  },
+  button1Text: {
+    color: 'purple',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  button2Text: {
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  plusMinusButton: {
+    borderWidth: 1,
+    borderRadius: 50,
+    width: 25,
+    height: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  quantityText: {
+    marginTop: 3,
+  },
 });

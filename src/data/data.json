@@ -1,0 +1,46 @@
+{
+  "medicines":[
+    {
+      "id": 1,
+      "image": "https://products.dawaai.pk/800/glapan47691_1643268392_1.webp",
+      "name": "Panadol",
+      "price": 200
+    },
+    {
+      "id": 2,
+      "image": "https://products.dawaai.pk/800/abbbru35199_1639981143_2.webp",
+      "name": "Brufen",
+      "price": 300
+    },
+    {
+      "id": 3,
+      "image": "https://products.dawaai.pk/800/abbari113_1644992688_1.webp",
+      "name": "Arinac",
+      "price": 400
+    },
+    {
+      "id": 4,
+      "image": "https://products.dawaai.pk/800/getris1113_1657099778_3.webp",
+      "name": "Risek 40",
+      "price": 700
+    },
+    {
+      "id": 5,
+      "image": "https://products.dawaai.pk/800/abbsur251_1648118425_2.webp",
+      "name": "Surbez Z",
+      "price": 500
+    },
+    {
+      "id": 6,
+      "image": "https://products.dawaai.pk/800/qar46579_1633940048_1.webp",
+      "name": "Joshanda",
+      "price": 80
+    },
+    {
+      "id": 7,
+      "image": "https://products.dawaai.pk/800/rbstr1065_1664886964_1.webp",
+      "name": "Strepsils",
+      "price": 150
+    }
+  ]
+}

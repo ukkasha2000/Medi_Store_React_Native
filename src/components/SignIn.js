@@ -1,3 +1,7 @@
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import {styles} from './styles';
@@ -18,6 +22,30 @@ const SignIn = ({navigation}) => {
 
   const handleLogin = () => {
     console.log(`Email: ${email}, Password: ${password}`);
+    navigation.navigate('Products');
+  };
+  const logIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      // .then(() => {
+      //   navigation.navigate('Products');
+      // });
+      await GoogleSignin.signOut();
+      const userInfo = await GoogleSignin.signIn();
+      console.log(userInfo);
+      navigation.navigate('Products');
+      // this.setState({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
   };
   return (
     <View style={styles.mainContainerSignIn}>
@@ -47,7 +75,7 @@ const SignIn = ({navigation}) => {
 
       <View style={styles.subContainer}>
         {iconButtonData.map(({url, name}) => (
-          <TouchableOpacity style={styles.iconButton} key={url}>
+          <TouchableOpacity style={styles.iconButton} key={url} onPress={logIn}>
             <View style={styles.buttonContainer}>
               <Image
                 source={{
