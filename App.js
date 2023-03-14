@@ -14,10 +14,14 @@ import {TouchableOpacity} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
   useEffect(() => {
+    setTimeout(async () => {
+      SplashScreen.hide();
+    }, 3000);
     GoogleSignin.configure({
       webClientId:
         '328928413037-eni5qtu9umm3u5q42ojt4kiu2u0r7665.apps.googleusercontent.com',
@@ -41,6 +45,7 @@ const App = () => {
                 color: 'purple',
               },
               headerTitleAlign: 'center',
+              headerLeft: () => null,
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate('CartPage')}>

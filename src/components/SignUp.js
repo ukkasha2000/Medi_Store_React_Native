@@ -1,5 +1,11 @@
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {styles} from './styles';
 
 const SignUp = ({navigation}) => {
@@ -33,16 +39,56 @@ const SignUp = ({navigation}) => {
       value: confirmPassword,
     },
   ];
-  const iconButtonData = [
-    {
-      url: 'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png',
-      name: 'Google',
-    },
-    {
-      url: 'https://icon-library.com/images/facebook-png-icon/facebook-png-icon-12.jpg',
-      name: 'Facebook',
-    },
-  ];
+  const googleLogIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      // .then(() => {
+      //   navigation.navigate('Products');
+      // });
+      await GoogleSignin.signOut();
+      const userInfo = await GoogleSignin.signIn();
+      console.log(userInfo);
+      navigation.navigate('Products');
+      // this.setState({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+  const fbLoginIn = async () => {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccesToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    } else {
+      navigation.navigate('Products');
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(facebookCredential);
+  };
 
   const handleLogin = () => {
     console.log(`Email: ${email}, Password: ${password}`);
@@ -63,25 +109,36 @@ const SignUp = ({navigation}) => {
       ))}
 
       <TouchableOpacity onPress={handleLogin} style={styles.signInButton}>
-        <Text style={styles.buttonText}>Sign in</Text>
+        <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
 
       <View style={styles.subContainer}>
-        {iconButtonData.map(({url, name}) => (
-          <TouchableOpacity style={styles.iconButton} key={url}>
-            <View style={styles.buttonContainer}>
-              <Image
-                source={{
-                  uri: url,
-                }}
-                style={styles.buttonImage}
-              />
-              <View style={styles.buttonTextContainer}>
-                <Text style={styles.iconButtonText}>{name}</Text>
-              </View>
+        <TouchableOpacity style={styles.iconButton} onPress={googleLogIn}>
+          <View style={styles.buttonContainer}>
+            <Image
+              source={{
+                uri: 'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png',
+              }}
+              style={styles.buttonImage}
+            />
+            <View style={styles.buttonTextContainer}>
+              <Text style={styles.iconButtonText}>Google</Text>
             </View>
-          </TouchableOpacity>
-        ))}
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton} onPress={fbLoginIn}>
+          <View style={styles.buttonContainer}>
+            <Image
+              source={{
+                uri: 'https://icon-library.com/images/facebook-png-icon/facebook-png-icon-12.jpg',
+              }}
+              style={styles.buttonImage}
+            />
+            <View style={styles.buttonTextContainer}>
+              <Text style={styles.iconButtonText}>Facebook</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={styles.signUpFooter}
