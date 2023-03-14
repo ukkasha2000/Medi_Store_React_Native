@@ -15,6 +15,7 @@ import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import SplashScreen from 'react-native-splash-screen';
+import auth from '@react-native-firebase/auth';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -27,6 +28,14 @@ const App = () => {
         '328928413037-eni5qtu9umm3u5q42ojt4kiu2u0r7665.apps.googleusercontent.com',
     });
   }, []);
+  // const onPressSignOut = () => {
+  //   auth()
+  //     .signOut()
+  //     .then(() => {
+  //       console.log('User signed out!');
+  //       nav.navigate('Signin');
+  //     });
+  // };
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -45,7 +54,7 @@ const App = () => {
                 color: 'purple',
               },
               headerTitleAlign: 'center',
-              headerLeft: () => null,
+              headerLeft: () => '',
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate('CartPage')}>
@@ -76,13 +85,28 @@ const App = () => {
           <Stack.Screen
             name="CartPage"
             component={Cart}
-            options={{
+            options={({navigation}) => ({
               headerTitleStyle: {
                 color: 'purple',
               },
               headerTitleAlign: 'center',
               headerTitle: 'Cart',
-            }}
+              headerRight: () => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      auth()
+                        .signOut()
+                        .then(() => {
+                          console.log('User signed out!');
+                          navigation.navigate('Signin');
+                        });
+                    }}>
+                    <AntDesign name="logout" size={30} color="purple" />
+                  </TouchableOpacity>
+                );
+              },
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>

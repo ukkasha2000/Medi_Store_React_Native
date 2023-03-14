@@ -13,8 +13,19 @@ const SignIn = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    console.log(`Email: ${email}, Password: ${password}`);
-    navigation.navigate('Products');
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        // Signed In
+        let user = userCredential.user;
+        console.log('Signin usser = ' + user);
+        navigation.navigate('Products');
+      })
+      .catch(error => {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        errorCode ? console.log(errorCode) : console.log(errorMessage);
+      });
   };
   const googleLogIn = async () => {
     try {
